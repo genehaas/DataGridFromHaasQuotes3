@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridFromHaasQuotes", "DataGridFromHaasQuotes\DataGridFromHaasQuotes.csproj", "{E4B15D8C-EB26-4854-A207-197945457A67}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "QLogSetup", "QLogSetup\QLogSetup.vdproj", "{3F5E0A42-460B-462D-A3D5-C63DE3D069E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4B15D8C-EB26-4854-A207-197945457A67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4B15D8C-EB26-4854-A207-197945457A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4B15D8C-EB26-4854-A207-197945457A67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4B15D8C-EB26-4854-A207-197945457A67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F5E0A42-460B-462D-A3D5-C63DE3D069E4}.Debug|Any CPU.ActiveCfg = Debug
+		{3F5E0A42-460B-462D-A3D5-C63DE3D069E4}.Debug|Any CPU.Build.0 = Debug
+		{3F5E0A42-460B-462D-A3D5-C63DE3D069E4}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {682A0F97-9422-45AA-B7A9-E14114A731DC}
+	EndGlobalSection
+EndGlobal

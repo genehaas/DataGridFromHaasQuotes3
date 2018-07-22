@@ -1,0 +1,390 @@
+﻿<Window x:Class="DataGridFromHaasQuotes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DataGridFromHaasQuotes"
+        mc:Ignorable="d"
+        Title="Quote Log - Forecast Update" Height="350" Width="1180" MouseDown="Window_MouseDown">
+    <Grid x:Name="MainGrid" Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="95"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="90"/>
+            <ColumnDefinition Width="110"/>
+            <ColumnDefinition Width="90"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Margin="5" Visibility="Hidden" HorizontalAlignment="Right">Selected Project ID:</TextBlock>
+        <TextBlock Margin="5" Visibility="Hidden" Name="txtblkProjectID" Width="35" Height="16" Grid.Column="1" />
+        <!--<TextBlock Margin="5" HorizontalAlignment="Left">Cust:</TextBlock>-->
+        <TextBlock Margin="5" Name="txtblkCustomer" Background="LightBlue" Grid.ColumnSpan="2"/>
+        <TextBlock Margin="5" Name="txtblkQuoteNum" Grid.Column="2" Background="LightBlue" />
+        <TextBlock Margin="5" HorizontalAlignment="Right" Grid.Column="2" Visibility="Collapsed">Old StatusID:</TextBlock>
+        <WrapPanel Grid.Column="3">
+            <TextBlock Margin="5" Name="txtblkOldStatusID" Width="10" Height="16" Visibility="Hidden"/>
+            <TextBlock Margin="5" Name="txtblkOldStatus" Width="50" Height="16" Visibility="Hidden"/>
+        </WrapPanel>
+        <TextBlock Margin="5" HorizontalAlignment="Right" Grid.Column="4" Visibility="Hidden">Old CloseDate:</TextBlock>
+        <WrapPanel Grid.Column="5">
+            <TextBlock Name="txtblkOldCloseDate" Width="1" Height="16" />
+            <TextBlock Margin="5" Name="txtblkOldCloseDateDt" Width="55" Height="16" Visibility="Hidden"/>
+        </WrapPanel>
+        <TextBlock Margin="5" HorizontalAlignment="Right" Grid.Column="6" Visibility="Hidden">Old WinProbID:</TextBlock>
+        <WrapPanel Grid.Column="7">
+            <TextBlock Name="txtblkOldWinProbID" Width="10" Height="16" Visibility="Hidden"/>
+            <TextBlock Margin="5" Name="txtblkOldWinProb" Width="20" Height="16" Visibility="Hidden"/>
+        </WrapPanel>
+        <WrapPanel Grid.Column="8">
+            <TextBlock Margin="5" HorizontalAlignment="Left">Record Count:</TextBlock>
+            <TextBlock x:Name="txtblkNumRecords" Margin="5" HorizontalAlignment="Left" Width="20"></TextBlock>
+        </WrapPanel>
+        <TextBlock Margin="5" Visibility="Hidden" HorizontalAlignment="Right" Grid.Row="1">Selected Quote ID:</TextBlock>
+        <TextBlock Margin="5" Visibility="Hidden" Name="txtblkQuoteID" Width="35" Height="16" Grid.Row="1" Grid.Column="1" />
+        <TextBlock Margin="5" Grid.Row="1" Grid.ColumnSpan="3" Name="txtblkProjDesc" Background="LightBlue" />
+        <TextBlock Margin="5" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2" Visibility="Collapsed">New StatusID:</TextBlock>
+        <WrapPanel Grid.Row="1" Grid.Column="3">
+            <TextBlock Margin="5" Name="txtblkNewStatusID" Width="10" Height="16" Visibility="Hidden"/>
+            <TextBlock Margin="5" Name="txtblkNewStatus" Width="50" Height="16" Visibility="Hidden"/>
+        </WrapPanel>
+        <TextBlock Margin="5" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="4" Visibility="Hidden">New CloseDate:</TextBlock>
+        <WrapPanel Grid.Row="1" Grid.Column="5">
+            <TextBlock Name="txtblkNewCloseDate" Width="1" Height="16" />
+            <TextBlock Margin="5" Name="txtblkNewCloseDateDt" Width="55" Height="16" Visibility="Hidden"/>
+        </WrapPanel>
+        <TextBlock Margin="5" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="6" Visibility="Hidden">New WinProbID:</TextBlock>
+        <WrapPanel Grid.Row="1" Grid.Column="7">
+            <TextBlock Name="txtblkNewWinProbID" Width="10" Height="16" Visibility="Hidden"/>
+            <TextBlock Margin="5" Name="txtblkNewWinProb" Width="20" Height="16" Visibility="Hidden"/>
+        </WrapPanel>
+        <WrapPanel Grid.Row="2" Grid.ColumnSpan="9">
+            <TextBlock Margin="5">Status:</TextBlock>
+            <ComboBox Name="cmbxStatus"
+                      SelectionChanged="cmbxStatus_SelectionChanged">
+            </ComboBox>
+        
+
+            <TextBlock Text="Close Month: " Margin="10" />
+            <Calendar x:Name="CloseDateCalendar" Height="30"
+                  DisplayMode="Month" DisplayDateChanged="CloseDateCalendar_DisplayDateChanged" SelectedDatesChanged="CloseDateCalendar_SelectedDatesChanged" 
+                      MouseLeave="CloseDateCalendar_MouseLeave" DisplayModeChanged="CloseDateCalendar_DisplayModeChanged" />
+
+            <TextBlock Text="Win Prob: " Margin="10" />
+            <ComboBox Name="cmbxWinProb" SelectionChanged="cmbxWinProb_SelectionChanged">
+            </ComboBox>
+            <Button x:Name="btnUpdate" Height="30" Width="60" Content="Update" Click="btnUpdate_Click"
+                    Margin="10,0,0,0" >
+            </Button>
+        </WrapPanel>
+
+        <ListBox x:Name="lstbxMarkets" Grid.Row="3" Grid.RowSpan="2" Background="LightGreen">
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxIndustrial" Click="ckbxIndustrial_Click" >Industrial</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxPower" Click="ckbxPower_Click" >Power</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxTransportation" Click="ckbxTransportation_Click" >Transportation</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxCommercial" Click="ckbxCommercial_Click" >Commercial</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxSemicon" >Semicon</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxMarine" >Marine</CheckBox>
+            </ListBoxItem>
+        </ListBox>
+        <!--<TextBlock x:Name="txtblkMktFilter"></TextBlock>-->
+
+        <!--<TextBlock Grid.Row="3" Grid.Column="1" Margin="5" HorizontalAlignment="Center" Background="LightGreen" >Distributor</TextBlock>-->
+        <TextBox x:Name="txtbxCustName" Grid.Row="3" Grid.Column="1" Margin="5,2,5,2" 
+                 HorizontalAlignment="Center" Width="80" 
+                 PreviewMouseUp="txtbxCustName_PreviewMouseUp" PreviewMouseDown="txtbxCustName_PreviewMouseDown"
+                 />
+
+        <!--<TextBlock Grid.Row="3" Grid.Column="2" Margin="5" HorizontalAlignment="Center" Background="LightGreen" >Country</TextBlock>-->
+        <TextBox x:Name="txtbxCountry" Grid.Row="3" Grid.Column="2" Margin="5,2,5,2" 
+                 HorizontalAlignment="Center" Width="90"/>
+
+        <TextBlock Grid.Row="2" Height="20" VerticalAlignment="Bottom" 
+                   TextAlignment="Center" Foreground="Red">Market</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="3" Height="20" VerticalAlignment="Bottom" 
+                   TextAlignment="Center" Foreground="Red">Region</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="4" Height="20" VerticalAlignment="Bottom" 
+                   TextAlignment="Center" Foreground="Red">QuoteBy | RespParty</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="2" Height="20" VerticalAlignment="Bottom" 
+                   TextAlignment="Center" Foreground="Red">Country</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="1" Height="20" VerticalAlignment="Bottom" 
+                   TextAlignment="Center" Foreground="Red">Distributor</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="6" Height="20" VerticalAlignment="Bottom" 
+                   TextAlignment="Center" Foreground="Red">Close Date</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="8" Height="20" VerticalAlignment="Bottom" 
+                   TextAlignment="Center" Foreground="Red">Quote Values</TextBlock>
+        <ListBox x:Name="lstbxRegions" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" Background="LightGreen">
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxAfrica" Click="ckbxAfrica_Click" >Africa</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxAsia" Click="ckbxAsia_Click" >Asia</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxAUS" Click="ckbxAUS_Click" >AUS-Oc</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxEurope" Click="ckbxEurope_Click" >Europe</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxLACarib" Click="ckbxLACarib_Click" >LA-Carib</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxMiddleEast" Click="ckbxMiddleEast_Click" >ME</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxNA" Click="ckbxNA_Click" >NA</CheckBox>
+            </ListBoxItem>
+        </ListBox>
+
+        <WrapPanel Grid.Row="3" Grid.Column="4" Grid.RowSpan="2">
+            <StackPanel Width="52">
+                <!--<TextBlock>Quote By</TextBlock>-->
+                <ListBox x:Name="lstbxQCreator" Background="LightGreen">
+                    <ListBoxItem>
+                        <CheckBox x:Name="ckbxQuoteByGH" Click="ckbxQuoteByGH_Click">GH</CheckBox>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <CheckBox x:Name="ckbxQuoteByEH" Click="ckbxQuoteByEH_Click">EH</CheckBox>
+                    </ListBoxItem>
+                </ListBox>
+            </StackPanel>
+            <StackPanel Width="55">
+                <!--<TextBlock>RespParty</TextBlock>-->
+                <ListBox x:Name="lstbxRespParty" Background="LightGreen">
+                    <ListBoxItem>
+                        <CheckBox x:Name="ckbxRespPartyGH" Click="ckbxRespPartyGH_Click">GH</CheckBox>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <CheckBox x:Name="ckbxRespPartyEH" Click="ckbxRespPartyEH_Click">EH</CheckBox>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <CheckBox x:Name="ckbxRespPartyAP" Click="ckbxRespPartyAP_Click">AP</CheckBox>
+                    </ListBoxItem>
+                </ListBox>
+            </StackPanel>
+        </WrapPanel>
+
+        <TextBlock Grid.Row="2" Grid.Column="5" Height="20" VerticalAlignment="Bottom" 
+                   TextAlignment="Center" Foreground="Red">Status</TextBlock>
+        <ListBox x:Name="lstbxStatus" Grid.Row="3" Grid.Column="5" Grid.RowSpan="2" Background="LightGreen">
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxPending" Click="ckbxPending_Click">Pending</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxBooked" Click="ckbxBooked_Click">Booked</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxLost" Click="ckbxLost_Click">Lost</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbxAbandoned" Click="ckbxAbandoned_Click">Abandoned</CheckBox>
+            </ListBoxItem>
+        </ListBox>
+
+        <StackPanel Grid.Row="3" Grid.RowSpan="2" Grid.Column="6" >
+            <TextBlock HorizontalAlignment="Center">Close Date</TextBlock>
+            <WrapPanel>
+                <TextBlock Margin="5" HorizontalAlignment="Right" Width="30">From:</TextBlock>
+                <TextBox x:Name="txtbxCloseFrom" Width="60" ToolTip="Enter as M/D/YYYY (like 6/1/2018)" />
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Margin="5" HorizontalAlignment="Right" Width="30">To:</TextBlock>
+                <TextBox x:Name="txtbxCloseTo" Width="60" ToolTip="Enter as M/D/YYYY (like 6/30/2018)" />
+            </WrapPanel>
+        </StackPanel>
+
+        <TextBlock Grid.Row="2" Grid.Column="7" Height="20" VerticalAlignment="Bottom" 
+                   TextAlignment="Center" Foreground="Red">Win Prob</TextBlock>
+        <ListBox x:Name="lstbxWinProbs" Grid.Row="3" Grid.RowSpan="2" Grid.Column="7" Background="LightGreen">
+            <ListBoxItem>
+                <CheckBox x:Name="ckbx10" Click="ckbx10_Click" >10</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbx25" Click="ckbx25_Click" >25</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbx50" Click="ckbx50_Click" >50</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbx75" Click="ckbx75_Click" >75</CheckBox>
+            </ListBoxItem>
+            <ListBoxItem>
+                <CheckBox x:Name="ckbx90" Click="ckbx90_Click" >90</CheckBox>
+            </ListBoxItem>
+        </ListBox>
+
+        <Button x:Name="btnReSelect"
+                Content="Re-Select Row"
+                Grid.Row="1" Grid.Column="8"
+                Height="25" Width="85"
+                HorizontalAlignment="Left"
+                Margin="5" Click="btnReSelect_Click"
+                Visibility="Hidden">
+        </Button>
+
+        <WrapPanel Grid.Row="3" Grid.Column="8"
+                   Grid.RowSpan="2" Grid.ColumnSpan="2"
+                   HorizontalAlignment="Left" Margin="5">
+            <StackPanel Background="LightGreen">
+                <TextBlock Width="40" Height="15" Background="LightGreen"></TextBlock>
+                <TextBlock Background="LightGreen" Height="22" HorizontalAlignment="Center">Min:</TextBlock>
+                <TextBlock Background="LightGreen" Height="22" HorizontalAlignment="Center">Max:</TextBlock>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Width="60" TextAlignment="Center">LP Val</TextBlock>
+                <TextBox x:Name="txtbxLPValMin" TextAlignment="Center"></TextBox>
+                <TextBox x:Name="txtbxLPValMax" TextAlignment="Center"></TextBox>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Width="60" TextAlignment="Center">HP Val</TextBlock>
+                <TextBox x:Name="txtbxHPValMin" TextAlignment="Center"></TextBox>
+                <TextBox x:Name="txtbxHPValMax" TextAlignment="Center"></TextBox>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Width="60" TextAlignment="Center">PF Val</TextBlock>
+                <TextBox x:Name="txtbxPFValMin" TextAlignment="Center"></TextBox>
+                <TextBox x:Name="txtbxPFValMax" TextAlignment="Center"></TextBox>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Width="60" TextAlignment="Center">Total Val</TextBlock>
+                <TextBox x:Name="txtbxTotalValMin" TextAlignment="Center"></TextBox>
+                <TextBox x:Name="txtbxTotalValMax" TextAlignment="Center"></TextBox>
+            </StackPanel>
+            <StackPanel>
+                <Button x:Name="btnTestFilter" 
+                    HorizontalAlignment="Left"
+                    Margin="5"
+                    Height="20" Width="60" 
+                    Content="Filter" 
+                    Click="btnFilter_Click">
+                </Button>
+                <Button x:Name="btnClearAllFilters" 
+                    HorizontalAlignment="Left"
+                    Margin="5"
+                    Height="25" Width="60" 
+                    Content="Clear All" 
+                    Click="btnClearAllFilters_Click">
+                </Button>
+            </StackPanel>
+            
+        </WrapPanel>
+        
+
+        <!--<DataGrid Name="grdHaasQuotes" 
+                  Margin="0,90,0,0" 
+                  SelectionChanged="grdHaasQuotes_SelectionChanged"
+                  SelectedValuePath="quote_id"
+                  IsReadOnly="True"
+                  CanUserAddRows="False">
+        </DataGrid>-->
+        <DataGrid Name="grdHaasQuotes" 
+                  Grid.Row="5" Grid.ColumnSpan="10"
+                  SelectionChanged="grdHaasQuotes_SelectionChanged"
+                  SelectedValuePath="quote_id"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False" AutoGeneratingColumn="grdHaasQuotes_AutoGeneratingColumn">
+        </DataGrid>
+
+        <DataGrid Name="grdQuoteComments"
+                  Background="Orange"
+                  Grid.Column="9"
+                  Grid.RowSpan="3"
+                  MaxWidth="700"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  HorizontalAlignment="Left">
+            <DataGrid.Resources>
+            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="Background" Value="Orange" />
+            </Style>
+            </DataGrid.Resources>
+            
+        </DataGrid>
+        <Button x:Name="btnAddComment"
+                Background="Orange"
+                Grid.Row="2" Grid.Column="8"
+                Margin="5"
+                Width="85"
+                Content="Add Comment"
+                HorizontalAlignment="Center" VerticalAlignment="Top" Click="btnAddComment_Click"
+                Visibility="Hidden"
+                >
+        </Button>
+    </Grid>
+    <Window.Resources>
+        <local:IsBeforeTodayConverter x:Key="IBTConverter"/>
+        <Style TargetType="DataGridRow">
+            <!--<Style.Resources>
+                <local:IsBeforeTodayConverter x:Key="IsBeforeTodayConverter" />
+            </Style.Resources>-->
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="Booked">
+                    <Setter Property="Background" Value="LightBlue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="Lost">
+                    <Setter Property="Background" Value="Black" />
+                    <Setter Property="Foreground" Value="White" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="Abandoned">
+                    <Setter Property="Background" Value="LightGray" />
+                </DataTrigger>
+                <!--<MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Status}" Value="Pending"/>
+                        --><!--<Condition Binding="{Binding CloseDate, StringFormat=d}" Value="6/30/18"/>--><!--
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="BorderBrush"  Value="Red"/>
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>-->
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Status}" Value="Pending" />
+                        <Condition Binding="{Binding CloseDate, Converter={StaticResource IBTConverter}}" Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="FontWeight" Value="ExtraBold"/>
+                    <Setter Property="Foreground" Value="Red"/>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="BorderBrush" Value="Coral"/>
+                    <Setter Property="Background" Value="Salmon"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="False">
+                    <Setter Property="Background" Value="LightGreen"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+</Window>
+
