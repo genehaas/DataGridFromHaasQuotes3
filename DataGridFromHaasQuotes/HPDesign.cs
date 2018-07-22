@@ -11,6 +11,7 @@ namespace DataGridFromHaasQuotes
     {
         public static int TFClgNozzleQty(double Spacing, double DistFrWall, double Length, double Width)
         {
+            /* General comment added to test sync with git repo */
             int NumRows = (int)Math.Ceiling((Width - 2 * DistFrWall) / Spacing) + 1;
             int NozzlesPerRow = (int)Math.Ceiling((Length - 2 * DistFrWall) / Spacing) + 1;
             return NumRows * NozzlesPerRow;
