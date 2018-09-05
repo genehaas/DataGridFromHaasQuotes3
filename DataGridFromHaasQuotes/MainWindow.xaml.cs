@@ -1923,7 +1923,8 @@ namespace DataGridFromHaasQuotes
                 e.Column.Visibility = Visibility.Collapsed;
             }
 
-            if (e.PropertyName == "SubjL1" || e.PropertyName == "CustName" || e.PropertyName == "EndUser")
+            if (e.PropertyName == "SubjL1" || e.PropertyName == "CustName" || e.PropertyName == "EndUser"
+                || e.PropertyName == "Contact")
             {
                 e.Column.Width = 150;
             }
