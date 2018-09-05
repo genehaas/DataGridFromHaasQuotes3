@@ -301,7 +301,7 @@
                   IsReadOnly="True"
                   CanUserAddRows="False">
         </DataGrid>-->
-        <DataGrid Name="grdHaasQuotes" 
+        <DataGrid Name="grdHaasQuotes"
                   Grid.Row="5" Grid.ColumnSpan="10"
                   SelectionChanged="grdHaasQuotes_SelectionChanged"
                   SelectedValuePath="quote_id"

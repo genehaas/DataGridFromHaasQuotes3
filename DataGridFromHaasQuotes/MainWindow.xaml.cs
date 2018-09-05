@@ -48,6 +48,7 @@ namespace DataGridFromHaasQuotes
             FillComboStatus();
             FillWinProb();
             //HideColumns();
+            //MessageBox.Show("No. of columns in grdHaasQuotes is " + grdHaasQuotes.Columns.Count + ".");
         }
 
         string ConString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString.ToString();
@@ -106,6 +107,7 @@ namespace DataGridFromHaasQuotes
                     DataTable dt = new DataTable("HaasQuotes");
                     sda.Fill(dt);
                     grdHaasQuotes.ItemsSource = dt.DefaultView;
+                    
                     //grdHaasQuotes.Columns[0].Visibility = Visibility.Hidden;
                 }
                 catch (SqlException sqlex)
@@ -132,7 +134,28 @@ namespace DataGridFromHaasQuotes
                 
                 con.Close();
             }
+            //grdHaasQuotes.Columns[3].Width = 150;
+            //MessageBox.Show("No. of columns in grdHaasQuotes is " + grdHaasQuotes.Columns.Count + ".");
             txtblkNumRecords.Text = grdHaasQuotes.Items.Count.ToString();
+
+            //return here fr 9/3/18 ***********************
+            //trying to set specific column widths for SubjL1, CustName and EndUser which can be very long causing user to have to scroll right to
+            //be able to see quote amounts. Need to be able to set fixed column width but allow user to make wider if necessary to be able to
+            //read the full text.
+            /* CODE SECTION BELOW COMMENTED 9/4/18
+            foreach(var c in grdHaasQuotes.Columns)
+            {
+                //double width = double(c.Width);
+                if (c.Header.ToString() == "SubjL1")
+                {
+                    if(c.Width > 100)
+                    {
+                        c.Width = 100;
+                    }
+                }
+                
+            }
+            END OF CODE SECTION COMMENTED 9/4/18 */
             //grdHaasQuotes.Columns[0].Visibility = Visibility.Hidden;
         }
 
@@ -173,7 +196,7 @@ namespace DataGridFromHaasQuotes
                     "WHERE QC.quote_id = " + quoteID + " " +
                     "ORDER BY [qc_id] DESC";
                     */
-                    TryReconnecting:
+            TryReconnecting:
                     try
                     {
                         SqlCommand cmd2 = new SqlCommand(CmdString, con);
@@ -700,6 +723,7 @@ namespace DataGridFromHaasQuotes
             string filterStatus = String.Empty;
             string filterWinProb = String.Empty;
 
+            /* --- section commented 9/3/18
             if (CheckedFilterExists())
             {
                 MessageBox.Show("At least one filter is checked.");
@@ -708,7 +732,7 @@ namespace DataGridFromHaasQuotes
             {
                 MessageBox.Show("No checkboxes checked.");
             }
-
+            */
 
             if (ckbxIndustrial.IsChecked == (bool?)true)
             {
@@ -1899,6 +1923,17 @@ namespace DataGridFromHaasQuotes
                 e.Column.Visibility = Visibility.Collapsed;
             }
 
+            if (e.PropertyName == "SubjL1" || e.PropertyName == "CustName" || e.PropertyName == "EndUser")
+            {
+                e.Column.Width = 150;
+            }
+
+            if (e.PropertyName == "quotenum" || e.PropertyName == "NumSystems" || e.PropertyName == "CustCity"
+                || e.PropertyName == "QGenInitials" || e.PropertyName == "RespPartyInitials" || e.PropertyName == "winpercentamt")
+            {
+                e.Column.Width = 35;
+            }
+
             if (e.PropertyType == typeof(DateTime))
             {
                 (e.Column as DataGridTextColumn).Binding.StringFormat = "MM/dd/yy";
@@ -1907,9 +1942,11 @@ namespace DataGridFromHaasQuotes
             }
         }
 
+
+        /* SECTION BELOW COMMENTED 9/3/18
         private bool CheckedFilterExists()
         {
-            IEnumerable<CheckBox> myBoxes = FindVisualChildren<CheckBox>(this);
+            //IEnumerable<CheckBox> myBoxes = FindVisualChildren<CheckBox>(this);  (THIS LINE WAS THROWING ERROR SO COMMENTED 9/3/18)
 
             int numChecked = 0;
             CheckBox cb;
@@ -1937,6 +1974,8 @@ namespace DataGridFromHaasQuotes
                 return false;
             }
         }
+        END OF CODE SECTION COMMENTED 9/3/18*/
+
     }
 
     public class IsBeforeTodayConverter : IValueConverter
