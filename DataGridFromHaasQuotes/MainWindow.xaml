@@ -170,6 +170,9 @@
                     <ListBoxItem>
                         <CheckBox x:Name="ckbxQuoteByEH" Click="ckbxQuoteByEH_Click">EH</CheckBox>
                     </ListBoxItem>
+                    <ListBoxItem>
+                        <CheckBox x:Name="ckbxQuoteByPH" Click="ckbxQuoteByPH_Click">PH</CheckBox>
+                    </ListBoxItem>
                 </ListBox>
             </StackPanel>
             <StackPanel Width="55">
@@ -183,6 +186,9 @@
                     </ListBoxItem>
                     <ListBoxItem>
                         <CheckBox x:Name="ckbxRespPartyAP" Click="ckbxRespPartyAP_Click">AP</CheckBox>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <CheckBox x:Name="ckbxRespPartyPH" Click="ckbxRespPartyPH_Click">PH</CheckBox>
                     </ListBoxItem>
                 </ListBox>
             </StackPanel>

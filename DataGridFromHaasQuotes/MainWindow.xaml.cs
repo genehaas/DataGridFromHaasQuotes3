@@ -1264,6 +1264,17 @@ namespace DataGridFromHaasQuotes
                     filterQuoteBy = filterQuoteBy + " OR QGenInitials = '" + ckbxQuoteByEH.Content.ToString() + "'";
                 }
             }
+            if (ckbxQuoteByPH.IsChecked == (bool?)true)
+            {
+                if (filterQuoteBy == String.Empty)
+                {
+                    filterQuoteBy = "QGenInitials = '" + ckbxQuoteByPH.Content.ToString() + "'";
+                }
+                else
+                {
+                    filterQuoteBy = filterQuoteBy + " OR QGenInitials = '" + ckbxQuoteByPH.Content.ToString() + "'";
+                }
+            }
 
             if (filterQuoteBy.Contains(" OR "))
             {
@@ -1306,6 +1317,17 @@ namespace DataGridFromHaasQuotes
                 else
                 {
                     filterRespParty = filterRespParty + " OR RespPartyInitials = '" + ckbxRespPartyAP.Content.ToString() + "'";
+                }
+            }
+            if (ckbxRespPartyPH.IsChecked == (bool?)true)
+            {
+                if (filterRespParty == String.Empty)
+                {
+                    filterRespParty = "RespPartyInitials = '" + ckbxRespPartyPH.Content.ToString() + "'";
+                }
+                else
+                {
+                    filterRespParty = filterRespParty + " OR RespPartyInitials = '" + ckbxRespPartyPH.Content.ToString() + "'";
                 }
             }
 
@@ -1669,9 +1691,11 @@ namespace DataGridFromHaasQuotes
             ckbxPower.IsChecked = false;
             ckbxQuoteByEH.IsChecked = false;
             ckbxQuoteByGH.IsChecked = false;
+            ckbxQuoteByPH.IsChecked = false;
             ckbxRespPartyAP.IsChecked = false;
             ckbxRespPartyEH.IsChecked = false;
             ckbxRespPartyGH.IsChecked = false;
+            ckbxRespPartyPH.IsChecked = false;
             ckbxSemicon.IsChecked = false;
             ckbxTransportation.IsChecked = false;
 
@@ -1784,6 +1808,11 @@ namespace DataGridFromHaasQuotes
             grdHaasQuotes.Focus();
         }
 
+        private void ckbxQuoteByPH_Click(object sender, RoutedEventArgs e)
+        {
+            grdHaasQuotes.Focus();
+        }
+
         private void ckbxRespPartyGH_Click(object sender, RoutedEventArgs e)
         {
             grdHaasQuotes.Focus();
@@ -1795,6 +1824,11 @@ namespace DataGridFromHaasQuotes
         }
 
         private void ckbxRespPartyAP_Click(object sender, RoutedEventArgs e)
+        {
+            grdHaasQuotes.Focus();
+        }
+
+        private void ckbxRespPartyPH_Click(object sender, RoutedEventArgs e)
         {
             grdHaasQuotes.Focus();
         }
