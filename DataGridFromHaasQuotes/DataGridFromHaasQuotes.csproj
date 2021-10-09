@@ -53,10 +53,10 @@
     <ApplicationIcon>Iconshock-Tiny-Animals-Turtle.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>4BE4DAE6657EA6527934446211B9CE088B16AD1A</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>53F618C1D1A17CA3958DDF0374C7214C9E983B02</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>DataGridFromHaasQuotes_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>DataGridFromHaasQuotes_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -136,6 +136,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DataGridFromHaasQuotes_1_TemporaryKey.pfx" />
     <None Include="DataGridFromHaasQuotes_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
