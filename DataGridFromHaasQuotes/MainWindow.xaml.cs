@@ -530,33 +530,38 @@ namespace DataGridFromHaasQuotes
                 }
             }
 
-            FillGrid:
-            //re-apply the existing filter (if applicable)
-            if (updatesApplied > 0 && filterAll.Length > 0)
+        FillGrid:
+            // only re-filter and update the grid if user has checked the ckbxRefreshGrid
+            if (ckbxRefreshGrid.IsChecked == (bool?)true)
             {
-                CmdString = "SELECT * FROM QLDataByQuoteWPF2 " +
-                        "ORDER BY quote_id DESC, Rev DESC";
-                quoteUpdated = true;
-                ApplyFilter(CmdString, filterAll);
-                //quoteUpdated = false;
-            }
-            else if (updatesApplied > 0 && filterAll.Length == 0)
-            {
-                FillDataGrid();
-            }
-            else if (updatesApplied == 0 && filterAll.Length > 0)
-            {
-                //just re-fill the grid
-                MessageBox.Show("You did not update a quote. However, quote log has been updated to capture any other user's updates.");
-                CmdString = "SELECT * FROM QLDataByQuoteWPF2 " +
-                        "ORDER BY quote_id DESC, Rev DESC";
-                ApplyFilter(CmdString, filterAll);
-            }
-            else
-            {
-                //just re-fill the grid
-                MessageBox.Show("You did not update a quote. However, quote log has been updated to capture any other user's updates.");
-                FillDataGrid();
+
+                //re-apply the existing filter (if applicable)
+                if (updatesApplied > 0 && filterAll.Length > 0)
+                {
+                    CmdString = "SELECT * FROM QLDataByQuoteWPF2 " +
+                            "ORDER BY quote_id DESC, Rev DESC";
+                    quoteUpdated = true;
+                    ApplyFilter(CmdString, filterAll);
+                    //quoteUpdated = false;
+                }
+                else if (updatesApplied > 0 && filterAll.Length == 0)
+                {
+                    FillDataGrid();
+                }
+                else if (updatesApplied == 0 && filterAll.Length > 0)
+                {
+                    //just re-fill the grid
+                    MessageBox.Show("You did not update a quote. However, quote log has been updated to capture any other user's updates.");
+                    CmdString = "SELECT * FROM QLDataByQuoteWPF2 " +
+                            "ORDER BY quote_id DESC, Rev DESC";
+                    ApplyFilter(CmdString, filterAll);
+                }
+                else
+                {
+                    //just re-fill the grid
+                    MessageBox.Show("You did not update a quote. However, quote log has been updated to capture any other user's updates.");
+                    FillDataGrid();
+                }
             }
 
             txtblkNumRecords.Text = grdHaasQuotes.Items.Count.ToString();
