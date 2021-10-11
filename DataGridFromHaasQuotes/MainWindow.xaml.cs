@@ -326,6 +326,10 @@ namespace DataGridFromHaasQuotes
                 quoteID = txtblkQuoteID.Text;
             }
 
+            //define row_selected to be used for updating specific cells in the datagrid
+            DataGrid dg = grdHaasQuotes;
+            DataRowView row_selected = dg.SelectedItem as DataRowView;
+
             //update status_id in ProjectQuotes table
             if (!String.IsNullOrEmpty(txtblkNewStatusID.Text))
             {
@@ -373,6 +377,10 @@ namespace DataGridFromHaasQuotes
 
                         con.Close();
                     }
+
+                    //try updating the status_id and Status fields for the selected row in the datagrid
+                    row_selected["Status"] = txtblkNewStatus.Text;
+                    row_selected["status_id"] = txtblkNewStatusID.Text;
                 }
             }
             
@@ -428,6 +436,10 @@ namespace DataGridFromHaasQuotes
 
                         con.Close();
                     }
+
+                    //try updating the WinProbSales_id and winpercentamt fields for the selected row in the datagrid
+                    row_selected["WinProbSales_id"] = txtblkNewWinProbID.Text;
+                    row_selected["winpercentamt"] = txtblkNewWinProb.Text;
                 }
             }
 
@@ -526,6 +538,12 @@ namespace DataGridFromHaasQuotes
 
                             con.Close();
                         }
+
+                        //try updating the AwardDateSales and CloseDate fields for the selected row in the datagrid
+                        DateTime newDate = CloseDateCalendar.DisplayDate;
+                        DateTime lastDayOfDisplayedMonth = new DateTime(newDate.Year, newDate.Month, DateTime.DaysInMonth(newDate.Year, newDate.Month));
+                        row_selected["CloseDate"] = lastDayOfDisplayedMonth.ToString("MM/dd/yy");
+                        row_selected["AwardDateSales"] = txtblkNewCloseDate.Text;
                     }
                 }
             }
@@ -1633,6 +1651,11 @@ namespace DataGridFromHaasQuotes
 
                 double newSerialCloseDate = double.Parse(txtblkNewCloseDate.Text);
                 txtblkNewCloseDateDt.Text = lastDayOfDisplayedMonth.ToShortDateString();
+                //TODO remove test code below after completing code to update selected record fields in datagrid
+                //above line formats the date string as "12/31/2021"
+                //next line formats the date string as "12/31/21"
+                string tmpNewCloseDateMMDDYY = lastDayOfDisplayedMonth.ToString("MM/dd/yy");
+
                 userChangedDate = true;
                 //CloseDateCalendar.SelectedDate = lastDayOfDisplayedMonth;
             }
