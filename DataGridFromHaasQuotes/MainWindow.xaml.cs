@@ -1651,10 +1651,6 @@ namespace DataGridFromHaasQuotes
 
                 double newSerialCloseDate = double.Parse(txtblkNewCloseDate.Text);
                 txtblkNewCloseDateDt.Text = lastDayOfDisplayedMonth.ToShortDateString();
-                //TODO remove test code below after completing code to update selected record fields in datagrid
-                //above line formats the date string as "12/31/2021"
-                //next line formats the date string as "12/31/21"
-                string tmpNewCloseDateMMDDYY = lastDayOfDisplayedMonth.ToString("MM/dd/yy");
 
                 userChangedDate = true;
                 //CloseDateCalendar.SelectedDate = lastDayOfDisplayedMonth;
